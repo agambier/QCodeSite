@@ -2,30 +2,28 @@
 #define CODESITE_DYNAMIC_DLL_PUBLIC
 #include "CodeSiteDll.h"
 
-namespace Debug {
+bool QCodeSite::m_bIsInitialized = false;
 
-bool CodeSite::m_bIsInitialized = false;
-
-//	Function:	CodeSite_MessageHandler
+//	Function:	QCodeSite_MessageHandler
 //		Message handler when qDebug(), qWarning() functions.
-void CodeSite_MessageHandler( QtMsgType tType, const QMessageLogContext &tContext, const QString &tText )
+void QCodeSite_MessageHandler( QtMsgType tType, const QMessageLogContext &tContext, const QString &tText )
 {
 	Q_UNUSED( tContext );
 
 	switch( tType )
 	{
 		case QtWarningMsg:
-			CodeSite::warning( tText );
+			QCodeSite::warning( tText );
 			break;
 
 		case QtCriticalMsg:
 		case QtFatalMsg:
-			CodeSite::error( tText );
+			QCodeSite::error( tText );
 			break;
 
 		case QtDebugMsg:
 		default:
-			CodeSite::message( tText );
+			QCodeSite::message( tText );
 			break;
 	}
 }
@@ -33,17 +31,17 @@ void CodeSite_MessageHandler( QtMsgType tType, const QMessageLogContext &tContex
 //
 //
 //
-CodeSite::CodeSite()
+QCodeSite::QCodeSite()
 {
-
+	//	EMPTY SECTION
 }
 
 //
 //
 //
-CodeSite::~CodeSite()
+QCodeSite::~QCodeSite()
 {
-	if( false != m_bIsInitialized )
+	if( !m_bIsInitialized )
 	{
 		CodeSite_FreeDll();
 		m_bIsInitialized = false;
@@ -53,142 +51,139 @@ CodeSite::~CodeSite()
 //
 //
 //
-bool CodeSite::initialize( const QString &tCodeSiteDll, bool bRedirectQDebug )
+bool QCodeSite::initialize( const QString &tCodeSiteDll, bool bRedirectQDebug )
 {
-	if( false == m_bIsInitialized )
+	if( !m_bIsInitialized )
 	{
 		//	Load the library
-		if( cserrOk == CodeSite_LoadDll( ( 0 == tCodeSiteDll.length() ) ? NULL : ( wchar_t* )tCodeSiteDll.utf16() ) )
+		if( cserrOk == CodeSite_LoadDll( ( 0 == tCodeSiteDll.length() ) ? NULL : tCodeSiteDll.toStdWString().c_str() ) )
 		{
 			m_bIsInitialized = true;
 
 			//	Redirect qDebug()
-			if( false != bRedirectQDebug )
-			{
-				qInstallMessageHandler( CodeSite_MessageHandler );
-			}
+			if( !bRedirectQDebug )
+				qInstallMessageHandler( QCodeSite_MessageHandler );
 		}
 	}
+
 	return m_bIsInitialized;
 }
 
 //
 //
 //
-void CodeSite::clear()
+void QCodeSite::clear()
 {
-	if( false != m_bIsInitialized )
+	if( !isInitialized() )
 		CodeSite_Clear();
 }
 
 //
 //
 //
-void CodeSite::enterMethod(const QString &tText)
+void QCodeSite::enterMethod(const QString &tText)
 {
-	if( false != m_bIsInitialized )
-		CodeSite_EnterMethod( ( wchar_t* )tText.utf16() );
+	if( !isInitialized() )
+		CodeSite_EnterMethod( tText.toStdWString().c_str() );
 }
 
 //
 //
 //
-void CodeSite::exitMethod(const QString &tText)
+void QCodeSite::exitMethod(const QString &tText)
 {
-	if( false != m_bIsInitialized )
-		CodeSite_ExitMethod( ( wchar_t* )tText.utf16() );
+	if( !isInitialized() )
+		CodeSite_ExitMethod( tText.toStdWString().c_str() );
 }
 
 //
 //
 //
-void CodeSite::message(const QString &tText)
+void QCodeSite::message(const QString &tText)
 {
-	if( false != m_bIsInitialized )
-		CodeSite_Message( ( wchar_t* )tText.utf16() );
+	if( !isInitialized() )
+		CodeSite_Message( tText.toStdWString().c_str() );
 }
 
 //
 //
 //
-void CodeSite::error(const QString &tText)
+void QCodeSite::error(const QString &tText)
 {
-	if( false != m_bIsInitialized )
-		CodeSite_Error( ( wchar_t* )tText.utf16() );
+	if( !isInitialized() )
+		CodeSite_Error( tText.toStdWString().c_str() );
 }
 
 //
 //
 //
-void CodeSite::warning(const QString &tText)
+void QCodeSite::warning(const QString &tText)
 {
-	if( false != m_bIsInitialized )
-		CodeSite_Warning( ( wchar_t* )tText.utf16() );
+	if( !isInitialized() )
+		CodeSite_Warning( tText.toStdWString().c_str() );
 }
 
 //
 //
 //
-void CodeSite::reminder(const QString &tText)
+void QCodeSite::reminder(const QString &tText)
 {
-	if( false != m_bIsInitialized )
-		CodeSite_Reminder( ( wchar_t* )tText.utf16() );
+	if( !isInitialized() )
+		CodeSite_Reminder( tText.toStdWString().c_str() );
 }
 
 //
 //
 //
-void CodeSite::note(const QString &tText)
+void QCodeSite::note(const QString &tText)
 {
-	if( false != m_bIsInitialized )
-		CodeSite_Note( ( wchar_t* )tText.utf16() );
+	if( !isInitialized() )
+		CodeSite_Note(tText.toStdWString().c_str() );
 }
 
 //
 //
 //
-void CodeSite::category(const QString &tText)
+void QCodeSite::category(const QString &tText)
 {
-	if( false != m_bIsInitialized )
-		CodeSite_Category( ( wchar_t* )tText.utf16() );
+	if( !isInitialized() )
+		CodeSite_Category( tText.toStdWString().c_str() );
 }
 
 //
 //
 //
-void CodeSite::addCheckPoint()
+void QCodeSite::addCheckPoint()
 {
-	if( false != m_bIsInitialized )
+	if( !isInitialized() )
 		CodeSite_AddCheckPoint();
 }
 
 //
 //
 //
-void CodeSite::resetCheckPoint()
+void QCodeSite::resetCheckPoint()
 {
-	if( false != m_bIsInitialized )
+	if( !isInitialized() )
 		CodeSite_ResetCheckPoint();
 }
 
 //
 //
 //
-void CodeSite::addSeparator()
+void QCodeSite::addSeparator()
 {
-	if( false != m_bIsInitialized )
+	if( !isInitialized() )
 		CodeSite_AddSeparator();
 }
 
 //
 //
 //
-void CodeSite::addResetSeparator()
+void QCodeSite::addResetSeparator()
 {
-	if( false != m_bIsInitialized )
+	if( !isInitialized() )
 		CodeSite_AddResetSeparator();
 }
 
-
-}
 

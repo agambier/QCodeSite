@@ -3,7 +3,7 @@
 
 #include <QString>
 #include <QDebug>
-namespace Debug {
+
 
 class QCodeSite
 {
@@ -40,7 +40,7 @@ class QCodeSite
 		static bool m_bIsInitialized;
 };
 
-}
+
 
 
 #endif // CODESITE_H

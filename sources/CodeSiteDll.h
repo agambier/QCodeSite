@@ -100,56 +100,56 @@ void CODESITE_API CodeSite_Clear( void );
 //
 //	Parameters:
 // ---------------------------------------------------------------------------
-void CODESITE_API CodeSite_EnterMethod( wchar_t *pwszText CODESITE_VALIST );
+void CODESITE_API CodeSite_EnterMethod( const wchar_t *pwszText CODESITE_VALIST );
 
 // ---------------------------------------------------------------------------
 //	Function:
 //
 //	Parameters:
 // ---------------------------------------------------------------------------
-void CODESITE_API CodeSite_ExitMethod( wchar_t *pwszText CODESITE_VALIST );
+void CODESITE_API CodeSite_ExitMethod( const wchar_t *pwszText CODESITE_VALIST );
 
 // ---------------------------------------------------------------------------
 //	Function:	
 //
 //	Parameters:
 // ---------------------------------------------------------------------------
-void CODESITE_API CodeSite_Message( wchar_t *pwszText CODESITE_VALIST );
+void CODESITE_API CodeSite_Message( const wchar_t *pwszText CODESITE_VALIST );
 
 // ---------------------------------------------------------------------------
 //	Function:
 //
 //	Parameters:
 // ---------------------------------------------------------------------------
-void CODESITE_API CodeSite_Error( wchar_t *pwszText CODESITE_VALIST );
+void CODESITE_API CodeSite_Error( const wchar_t *pwszText CODESITE_VALIST );
 
 // ---------------------------------------------------------------------------
 //	Function:
 //
 //	Parameters:
 // ---------------------------------------------------------------------------
-void CODESITE_API CodeSite_Warning( wchar_t *pwszText CODESITE_VALIST );
+void CODESITE_API CodeSite_Warning( const wchar_t *pwszText CODESITE_VALIST );
 
 // ---------------------------------------------------------------------------
 //	Function:
 //
 //	Parameters:
 // ---------------------------------------------------------------------------
-void CODESITE_API CodeSite_Reminder( wchar_t *pwszText CODESITE_VALIST );
+void CODESITE_API CodeSite_Reminder( const wchar_t *pwszText CODESITE_VALIST );
 
 // ---------------------------------------------------------------------------
 //	Function:
 //
 //	Parameters:
 // ---------------------------------------------------------------------------
-void CODESITE_API CodeSite_Note( wchar_t *pwszText CODESITE_VALIST );
+void CODESITE_API CodeSite_Note( const wchar_t *pwszText CODESITE_VALIST );
 
 // ---------------------------------------------------------------------------
 //	Function:
 //
 //	Parameters:
 // ---------------------------------------------------------------------------
-void CODESITE_API CodeSite_Category( wchar_t *pwszText CODESITE_VALIST );
+void CODESITE_API CodeSite_Category( const wchar_t *pwszText CODESITE_VALIST );
 
 // ---------------------------------------------------------------------------
 //	Function:
@@ -182,14 +182,14 @@ void CODESITE_API CodeSite_AddResetSeparator( void );
 #else
 //	----- Dynamic library -----
 typedef void ( __stdcall *TCodeSite_Clear )( void );
-typedef void ( __stdcall *TCodeSite_EnterMethod )( wchar_t *pwszText CODESITE_VALIST );
-typedef void ( __stdcall *TCodeSite_ExitMethod )( wchar_t *pwszText CODESITE_VALIST );
-typedef void ( __stdcall *TCodeSite_Message )( wchar_t *pwszText CODESITE_VALIST );
-typedef void ( __stdcall *TCodeSite_Error )( wchar_t *pwszText CODESITE_VALIST );
-typedef void ( __stdcall *TCodeSite_Warning )( wchar_t *pwszText CODESITE_VALIST );
-typedef void ( __stdcall *TCodeSite_Reminder )( wchar_t *pwszText CODESITE_VALIST );
-typedef void ( __stdcall *TCodeSite_Note )( wchar_t *pwszText CODESITE_VALIST );
-typedef void ( __stdcall *TCodeSite_Category )( wchar_t *pwszText CODESITE_VALIST );
+typedef void ( __stdcall *TCodeSite_EnterMethod )( const wchar_t *pwszText CODESITE_VALIST );
+typedef void ( __stdcall *TCodeSite_ExitMethod )( const wchar_t *pwszText CODESITE_VALIST );
+typedef void ( __stdcall *TCodeSite_Message )(const  wchar_t *pwszText CODESITE_VALIST );
+typedef void ( __stdcall *TCodeSite_Error )( const wchar_t *pwszText CODESITE_VALIST );
+typedef void ( __stdcall *TCodeSite_Warning )( const wchar_t *pwszText CODESITE_VALIST );
+typedef void ( __stdcall *TCodeSite_Reminder )( const wchar_t *pwszText CODESITE_VALIST );
+typedef void ( __stdcall *TCodeSite_Note )( const wchar_t *pwszText CODESITE_VALIST );
+typedef void ( __stdcall *TCodeSite_Category )( const wchar_t *pwszText CODESITE_VALIST );
 typedef void ( __stdcall *TCodeSite_AddCheckPoint )( void );
 typedef void ( __stdcall *TCodeSite_ResetCheckPoint )( void );
 typedef void ( __stdcall *TCodeSite_AddSeparator )( void );
@@ -266,7 +266,7 @@ TCodeSiteError CodeSite_FreeDll( void )
 	return cserrOk;
 }
 
-TCodeSiteError CodeSite_LoadDll( wchar_t *pwszDll )
+TCodeSiteError CodeSite_LoadDll( const wchar_t *pwszDll )
 {
 	TCodeSiteError tResult = cserrDllNotFound;
 
