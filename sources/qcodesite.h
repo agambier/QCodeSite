@@ -5,11 +5,11 @@
 #include <QDebug>
 namespace Debug {
 
-class CodeSite
+class QCodeSite
 {
 	public:
-		CodeSite();
-		~CodeSite();
+		QCodeSite();
+		~QCodeSite();
 
 		static bool initialize( const QString &tCodeSiteDll = "", bool bRedirectQDebug = true );
 

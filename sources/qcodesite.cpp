@@ -1,4 +1,4 @@
-#include "codesite.h"
+#include "qcodesite.h"
 #define CODESITE_DYNAMIC_DLL_PUBLIC
 #include "CodeSiteDll.h"
 
